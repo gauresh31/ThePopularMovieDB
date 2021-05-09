@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ThePopularMovieDB</string>
+    <string name="base_url">https://api.themoviedb.org/</string>
+    <string name="api_key">a7277104db9a560b6ef87a030fa6d069</string>
+</resources>

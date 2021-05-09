@@ -1,0 +1,90 @@
+package com.kt.thepopularmoviedb.api;
+
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
+@Module
+public class NetworkModule {
+    private final String baseUrl;
+    private final String apiKey;
+
+    public NetworkModule(String baseUrl, String apiKey) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+    }
+
+    @Provides
+    @Singleton
+    Interceptor provideAuthenticationInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+                HttpUrl originalHttpUrl = original.url();
+
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("api_key", apiKey)
+                        .build();
+
+                Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        };
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(StethoInterceptor stethoInterceptor,
+                                     Interceptor authenticationInterceptor) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+        return new OkHttpClient.Builder()
+                .addNetworkInterceptor(stethoInterceptor)
+                .addInterceptor(authenticationInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    public Retrofit provideRetrofit(
+                                    OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(new LiveDataCallAdapterFactory())
+                .build();
+    }
+
+
+    @Provides
+    @Singleton
+    public MovieService provideMovieService(Retrofit retrofit){
+        return retrofit.create(MovieService.class);
+    }
+}
+
