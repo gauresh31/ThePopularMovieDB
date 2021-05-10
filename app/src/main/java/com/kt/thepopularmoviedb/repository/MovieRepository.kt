@@ -1,5 +1,6 @@
 package com.kt.thepopularmoviedb.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kt.thepopularmoviedb.api.ApiResponse
@@ -23,7 +24,7 @@ class MovieRepository @Inject constructor(
 ) : Repository {
 
     init {
-        Timber.d("Injection MovieRepository")
+        Log.d("MovieRepository","Injection MovieRepository")
     }
 
     fun loadKeywordList(id: Int): LiveData<Resource<List<Keyword>>> {

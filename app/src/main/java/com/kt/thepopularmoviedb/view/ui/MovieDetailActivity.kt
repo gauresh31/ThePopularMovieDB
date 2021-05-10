@@ -34,7 +34,7 @@ class MovieDetailActivity : ViewModelActivity() {
         simpleToolbarWithHome(movie_detail_toolbar, getMovieFromIntent().title)
     }
 
-    private fun getMovieFromIntent() = intent.getParcelableExtra(movieId)!! as Movie
+    private fun getMovieFromIntent() = intent.getStringExtra(movieId)!! as Movie
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item?.itemId == android.R.id.home) onBackPressed()
@@ -44,7 +44,7 @@ class MovieDetailActivity : ViewModelActivity() {
     companion object {
         private const val movieId = "movie"
         fun startActivityModel(context: Context?, movie: Movie) {
-            (if ((context != null)) {
+            if (context != null) {
                 val intent = Intent(context, MovieDetailActivity::class.java).apply {
                     putExtra(
                         movieId,
@@ -52,7 +52,7 @@ class MovieDetailActivity : ViewModelActivity() {
                     )
                 }
                 context.startActivity(intent)
-            })
+            }
         }
     }
 }

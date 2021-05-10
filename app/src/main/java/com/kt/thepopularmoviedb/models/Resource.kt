@@ -2,7 +2,7 @@ package com.kt.thepopularmoviedb.models
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.kt.thepopularmoviedb.models.network.ErrorEnvelope
+import com.kt.thepopularmoviedb.models.network.ErrorTypes
 
 /**
  * A generic class that holds a value with its loading status.
@@ -19,15 +19,15 @@ class Resource<out T>(
     val onLastPage: Boolean
 ) {
 
-    var errorEnvelope: ErrorEnvelope? = null
+    var errorTypes: ErrorTypes? = null
 
     init {
         message?.let {
             try {
                 val gson = Gson()
-                errorEnvelope = gson.fromJson(message, ErrorEnvelope::class.java) as ErrorEnvelope
+                errorTypes = gson.fromJson(message, ErrorTypes::class.java) as ErrorTypes
             } catch (e: JsonSyntaxException) {
-                errorEnvelope = ErrorEnvelope(400, message, false)
+                errorTypes = ErrorTypes(400, message, false)
             }
         }
     }

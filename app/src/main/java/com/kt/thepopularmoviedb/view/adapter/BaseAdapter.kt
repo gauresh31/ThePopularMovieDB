@@ -10,7 +10,6 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-/** BaseAdapter is an abstract class for structuring the base adapter class. */
 @Suppress("unused", "MemberVisibilityCanBePrivate", "RedundantOverride", "RedundantVisibilityModifier")
 abstract class BaseAdapter :
     RecyclerView.Adapter<BaseViewHolder>(), LifecycleObserver {

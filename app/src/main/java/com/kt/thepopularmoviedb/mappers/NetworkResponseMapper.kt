@@ -1,4 +1,3 @@
-
 package com.kt.thepopularmoviedb.mappers
 
 import com.kt.thepopularmoviedb.models.NetworkResponseModel
