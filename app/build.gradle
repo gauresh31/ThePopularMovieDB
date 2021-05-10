@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "com.kt.thepopularmoviedb"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -50,6 +50,10 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+
+    androidExtensions {
+        experimental = true
     }
 }
 

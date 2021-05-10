@@ -13,8 +13,9 @@ class MovieListAdapter : BaseAdapter() {
     }
 
     fun addMovieList(resource: Resource<List<Movie>>) {
-            sections()[0].addAll(listOf(resource))
-            notifyDataSetChanged()
+        var listt = resource.data.orEmpty()
+        sections()[0].addAll(listt)
+        notifyDataSetChanged()
     }
 
     override fun layout(sectionRow: SectionRow) = R.layout.item_poster

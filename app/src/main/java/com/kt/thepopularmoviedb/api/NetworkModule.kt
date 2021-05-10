@@ -17,10 +17,8 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        stethoInterceptor: StethoInterceptor?,
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addNetworkInterceptor(stethoInterceptor!!)
             .addInterceptor(RequestInterceptor())
             .build()
     }

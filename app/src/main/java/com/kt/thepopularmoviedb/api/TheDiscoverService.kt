@@ -2,6 +2,7 @@ package com.kt.thepopularmoviedb.api
 
 import androidx.lifecycle.LiveData
 import com.kt.thepopularmoviedb.models.network.DiscoverMovieResponse
+import dagger.Provides
 import retrofit2.http.GET
 import retrofit2.http.Query
 

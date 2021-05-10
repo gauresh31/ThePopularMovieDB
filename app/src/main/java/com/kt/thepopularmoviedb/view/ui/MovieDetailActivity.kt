@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.kt.thepopularmoviedb.R
-import com.kt.thepopularmoviedb.di.ViewModelActivity
 import com.kt.thepopularmoviedb.databinding.ActivityMovieDetailBinding
+import com.kt.thepopularmoviedb.di.ViewModelActivity
 import com.kt.thepopularmoviedb.extension.applyToolbarMargin
 import com.kt.thepopularmoviedb.extension.simpleToolbarWithHome
 import com.kt.thepopularmoviedb.models.entity.Movie
@@ -22,7 +22,7 @@ class MovieDetailActivity : ViewModelActivity() {
         binding<ActivityMovieDetailBinding>(R.layout.activity_movie_detail).run {
             lifecycleOwner = this@MovieDetailActivity
             viewModel =
-                this@MovieDetailActivity.viewModel.apply { postMovieId(getMovieFromIntent().id) }
+                this@MovieDetailActivity.viewModel.apply { postMovieId(getMovieFromIntent()!!.id) }
             movie = getMovieFromIntent()
             reviewAdapter = ReviewListAdapter()
         }
@@ -31,10 +31,10 @@ class MovieDetailActivity : ViewModelActivity() {
 
     private fun initializeUI() {
         applyToolbarMargin(movie_detail_toolbar)
-        simpleToolbarWithHome(movie_detail_toolbar, getMovieFromIntent().title)
+        simpleToolbarWithHome(movie_detail_toolbar, getMovieFromIntent()!!.title)
     }
 
-    private fun getMovieFromIntent() = intent.getStringExtra(movieId)!! as Movie
+    private fun getMovieFromIntent() = intent.getParcelableExtra<Movie>(movieId) as Movie
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item?.itemId == android.R.id.home) onBackPressed()

@@ -1,7 +1,6 @@
 package com.kt.thepopularmoviedb.di
 
 import android.app.Application
-import com.kt.thepopularmoviedb.App
 import com.kt.thepopularmoviedb.api.NetworkModule
 import dagger.BindsInstance
 import dagger.Component
